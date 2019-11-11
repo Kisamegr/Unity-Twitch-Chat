@@ -1,4 +1,4 @@
-# Unity-Twitch-Chat-IRC
+# Unity-Twitch-Chat
 
 This is a lightweight Twitch.tv IRC client for Unity
 
@@ -15,12 +15,12 @@ It also parses additional information such as: name color, badges and emotes
 
 ## Usage
 
-**I recommend looking at SimpleExample.cs for usage examples.**
-
 1. Create a new empty gameObject and add **TwitchIRC.cs** on it
 2. Enter your OAuth token, Twitch username and the name of a channel you want to use in the Unity inspector of TwitchIRC
 3. Create a new empty gameObject and a new C# script with an reference to the **TwitchIRC.cs** component
 4. Add a listener to **TwitchIRC.newChatMessageEvent**
+
+**I recommend looking at SimpleExample.cs for usage examples.**
 
 ## API
 
