@@ -1,10 +1,10 @@
 # Unity-Twitch-Chat
 
-This is a lightweight Twitch.tv IRC client for Unity
+This is a lightweight [Twitch.tv IRC](https://dev.twitch.tv/docs/irc/) client for Unity.
 
-TwitchIRC parses chat messages into easy-to-use Chatter objects
+Unity Twitch Chat parses chat messages into objects which you can easily use inside your Unity projects.
 
-It also parses additional information such as: name color, badges and emotes
+It also parses additional information such as: name color, badges and emotes.
 
 ![img](https://i.imgur.com/rmZpBbR.png)
 
@@ -29,7 +29,6 @@ It also parses additional information such as: name color, badges and emotes
 - **TwitchIRC.SendChatMessage(string)** -> Sends a Twitch chat message
 - **TwitchIRC.Chatter.MessageContainsEmote(string)** -> Returns true if chat message contains a specific emote (id)
 - **TwitchIRC.Chatter.HasBadge(string)** -> Returns true if chat message sender has a specific badge
-
 
 
 ## Simple example project
