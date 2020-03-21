@@ -41,8 +41,11 @@ public class TwitchIRC : MonoBehaviour
         public bool debugIRC = false;
     }
 
+  private static TwitchIRC _instance = null;
+  public static TwitchIRC Shared { get => _instance; }
     private void Awake()
     {
+        _instance = this;
         if (settings.connectOnStart)
             ConnectIRC();
     }
