@@ -23,8 +23,8 @@ public class SimpleExample : MonoBehaviour
 
         //Examples for using the chatter object:
 
-        if (chatter.displayName == "Lexone")
-            Debug.Log("Chat message was sent by Lexone!");
+        if (chatter.displayName == "Kisamegr")
+            Debug.Log("Chat message was sent by Kisamegr!");
 
         if (chatter.HasBadge("subscriber"))
             Debug.Log("Chat message sender is a subscriber");
