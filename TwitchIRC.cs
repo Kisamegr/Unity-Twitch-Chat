@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Net.Sockets;
 using System.IO;
+using System;
 using UnityEngine;
 
 public class TwitchIRC : MonoBehaviour
@@ -9,7 +10,8 @@ public class TwitchIRC : MonoBehaviour
     [HideInInspector] public class NewChatMessageEvent : UnityEngine.Events.UnityEvent<Chatter> { }
 
     public NewChatMessageEvent newChatMessageEvent = new NewChatMessageEvent();
-
+    public event Action<string> UserJoinedEvent;
+ 
     private TcpClient client;
     private NetworkStream stream;
     private StreamReader reader;
@@ -79,6 +81,7 @@ public class TwitchIRC : MonoBehaviour
         writer.WriteLine("PASS oauth:" + (details.inputOauth.StartsWith("oauth:") ? details.inputOauth.Substring(6).ToLower() : details.inputOauth.ToLower()));
         writer.WriteLine("NICK " + details.inputNick.ToLower());
         writer.WriteLine("CAP REQ :twitch.tv/tags"); //This is required for things like name color, badges, emotes etc.
+        writer.WriteLine("CAP REQ :twitch.tv/membership");
         writer.Flush();
 
         connected = true;
@@ -116,7 +119,17 @@ public class TwitchIRC : MonoBehaviour
         outputQueue.Enqueue("PRIVMSG #" + details.inputChannel + " :" + message); //Place message in queue
     }
 
-    private Queue<string> outputQueue = new Queue<string>();
+  /// <summary>
+  /// Sends a whisper message
+  /// </summary>
+  //public void SendWhisperMessage(string user) {
+  //  if (user.Length <= 0) //User can't be empty
+  //    return;
+
+  //  outputQueue.Enqueue("WHISPER #" + details.inputChannel + " :" + message); //Place message in queue
+  //}
+
+  private Queue<string> outputQueue = new Queue<string>();
     private bool outputCooldown;
     private void WriteOutput()
     {
@@ -162,6 +175,11 @@ public class TwitchIRC : MonoBehaviour
             //Send a new Chatter object to event listeners
             newChatMessageEvent.Invoke(ParseIRCMessage(buffer));
             return;
+        }
+
+        if(buffer.Contains("JOIN #")) {
+          var username = buffer.Split('!')[0].Substring(1);
+          UserJoinedEvent?.Invoke(username);
         }
 
         //About once every five minutes, the server will send you a PING :tmi.twitch.tv. To ensure that your connection to the server is not prematurely terminated, reply with PONG :tmi.twitch.tv.
